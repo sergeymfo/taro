@@ -66,8 +66,8 @@
             
             for (let i = 1; i <= 78; i++) {
                 let card = document.createElement("img");
-                card.src = "0.jpeg"; // Рубашка карты
-                card.dataset.realSrc = `${i}.jpeg`;
+                card.src = "0.jpg"; // Рубашка карты
+                card.dataset.realSrc = `${i}.jpg`;
                 card.draggable = true;
                 card.addEventListener("dragstart", drag);
                 deck.appendChild(card);
