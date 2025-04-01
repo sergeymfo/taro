@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кельтский Крест Таро</title>
+    <style>
+        body {
+            background: url('table_background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .deck {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .deck img, .spread img {
+            width: 80px;
+            height: 130px;
+            cursor: pointer;
+        }
+        .spread {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(4, 140px);
+            gap: 10px;
+        }
+        .card {
+            width: 80px;
+            height: 130px;
+            border: 2px dashed #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Кельтский Крест Таро</h1>
+    <div class="deck" id="deck"></div>
+    <h2>Ваш расклад</h2>
+    <div class="spread" id="spread">
+        <div class="card" data-position="1"></div>
+        <div class="card" data-position="2"></div>
+        <div class="card" data-position="3"></div>
+        <div class="card" data-position="4"></div>
+        <div class="card" data-position="5"></div>
+        <div class="card" data-position="6"></div>
+        <div class="card" data-position="7"></div>
+        <div class="card" data-position="8"></div>
+        <div class="card" data-position="9"></div>
+        <div class="card" data-position="10"></div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const deck = document.getElementById("deck");
+            const spread = document.getElementById("spread");
+            
+            for (let i = 1; i <= 78; i++) {
+                let card = document.createElement("img");
+                card.src = "0.jpeg"; // Рубашка карты
+                card.dataset.realSrc = `${i}.jpeg`;
+                card.draggable = true;
+                card.addEventListener("dragstart", drag);
+                deck.appendChild(card);
+            }
+
+            function drag(event) {
+                event.dataTransfer.setData("text", event.target.dataset.realSrc);
+            }
+
+            document.querySelectorAll(".card").forEach(slot => {
+                slot.addEventListener("dragover", event => event.preventDefault());
+                slot.addEventListener("drop", function(event) {
+                    event.preventDefault();
+                    if (!this.hasChildNodes()) {
+                        let img = document.createElement("img");
+                        img.src = event.dataTransfer.getData("text");
+                        this.appendChild(img);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
